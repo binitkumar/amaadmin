@@ -82,7 +82,7 @@ $(function(){
       { mData:  dc,       sTitle: 'Saving',          asSorting: ['desc','asc'], sClass: 'price',      sWidth: '5em' },
       { mData:  pc,       sTitle: '% Saving',        asSorting: ['desc','asc'], sClass: 'percent',    sWidth: '5em' },
       { mData:  cm,       sTitle: 'Comm.',           asSorting: ['desc','asc'], sClass: 'price',      sWidth: '5em' },
-      { mData: 'rank',    sTitle: 'Best.',           asSorting: ['desc','asc'], sClass: 'bestseller', sWidth: '2em' },
+      { mData: 'rank',    sTitle: 'BEST-SELLERS',           asSorting: ['desc','asc'], sClass: 'bestseller', sWidth: '2em' },
       { mData: 'rating',  sTitle: 'Rating',          asSorting: ['desc','asc'], sClass: 'rating',     sWidth: '4em' },
       { mData: 'reviews', sTitle: 'Reviews',         asSorting: ['desc','asc'], sClass: 'reviews',    sWidth: '4em' }
     ],

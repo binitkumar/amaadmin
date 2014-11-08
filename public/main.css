@@ -60,7 +60,7 @@ td:hover .hbox {
 
 #refine,
 #results_wrapper, .right { float: left; margin: 1%; }
-#results_wrapper, .right { width: 80%; margin-left: 0; clear: none; }
+#results_wrapper, .right { width: 76%; margin-left: 0; clear: none; }
 #results { width: 100%; margin: 0; }
 
 #breadcrumbstable tbody { background: white; }
@@ -227,3 +227,10 @@ legend {
 abbr[title], acronym[title] {
   border-bottom: dotted 1px;
 }
+#refinements{
+  direction: rtl; 
+  margin-left: 0px; 
+  text-align: left;
+}
+
+

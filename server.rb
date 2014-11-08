@@ -31,7 +31,7 @@ set :port, port = 62934
 
 use Rack::Session::Cookie, :expire_after => 315360000, # about ten years
                            :secret => 'verysecretthings987$*!&2222'
-SILENT = true
+SILENT = false
 
 if SILENT
   $stdout.reopen(File::NULL)
@@ -39,7 +39,7 @@ if SILENT
 end
 
 configure do
-  set :logging, nil
+  set :logging, true
   logger = Logger.new (SILENT ? File::NULL : STDERR)
   logger.level = Logger::INFO
   logger.datetime_format = '%a %d-%m-%Y %H%M '
