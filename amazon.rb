@@ -154,7 +154,7 @@ def self.simple_p(s,z)
 
   # fix random small things
   p[:rating]  = '%0.1f' % (s[:rating].gsub(/ out of.*/,'').to_f) unless p[:rating] == ''
-  p[:reviews] = s[:reviews].to_i unless p[:reviews] == ''
+  p[:reviews] = s[:reviews].to_s unless p[:reviews] == ''
   p[:release] = s[:release].gsub(/.*\((.*)\).*/,'\1')
   p[:category] = s[:category].gsub(/:$/,'')
 
@@ -171,6 +171,7 @@ def self.simple_p(s,z)
   p[:reviews]    = p[:reviews_n]    if p[:reviews]    == ''
 
   p[:reviews] = p[:reviews].to_s.gsub(',','').gsub(/ cust.*/,'')
+  p[:reviews] = p[:reviews].to_i
 
   # get rid of extraneous fields
   %w(formats title_m brand_m brand_release_x sale_price_m sale_price_n list_price_m reviews_m reviews_n).each{|k|p.delete(k.to_sym)}
