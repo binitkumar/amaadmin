@@ -13,7 +13,7 @@ var statCancelled   = 'Cancelled.';
 var csvfields = {
   search:     'Search Phrase',
   category:   'Category',
-  asin:       'Product ID', 
+  asin:       'Product URL', 
   title:      'Product',
   brand:      'Brand or Artist',
   release:    'Release',
@@ -75,12 +75,10 @@ $(function(){
   table = $('#results').dataTable( {
     aoColumns: [
       { mData: 'category',sTitle: 'Category',                                   sClass: 'category',   sWidth: '5em' },
-      { mData:  asin,     sTitle: 'Prod&nbsp;ID',    bSortable:  false,         sClass: 'asin',       sWidth: '4em' },
+      { mData:  asin,     sTitle: 'Prod&nbsp;URL',    bSortable:  false,         sClass: 'asin',       sWidth: '4em' },
       { mData: 'title',   sTitle: 'Product',                                    sClass: 'title'                     },
       { mData:  lp,       sTitle: 'List&nbsp;Price', asSorting: ['desc','asc'], sClass: 'price',      sWidth: '5em' },
       { mData:  sp,       sTitle: 'Sale&nbsp;Price', asSorting: ['desc','asc'], sClass: 'price',      sWidth: '5em' },
-      { mData:  dc,       sTitle: 'Saving',          asSorting: ['desc','asc'], sClass: 'price',      sWidth: '5em' },
-      { mData:  pc,       sTitle: '% Saving',        asSorting: ['desc','asc'], sClass: 'percent',    sWidth: '5em' },
       { mData:  cm,       sTitle: 'Comm.',           asSorting: ['desc','asc'], sClass: 'price',      sWidth: '5em' },
       { mData: 'rank',    sTitle: 'BEST-SELLERS',           asSorting: ['desc','asc'], sClass: 'bestseller', sWidth: '2em' },
       { mData: 'rating',  sTitle: 'Rating',          asSorting: ['desc','asc'], sClass: 'rating',     sWidth: '4em' },
@@ -100,10 +98,9 @@ $(function(){
 
   $.fn.dataTableExt.afnFiltering.push(
     function( oSettings, aData, iDataIndex ) {
-      return aData[9] /1 >= filter.minrating  &&
-             aData[10] /1 >= filter.minreviews &&
-             aData[6]    >= filter.mindiscount &&
-            (aData[8] == 'Yes' || !filter.bestseller) &&
+      return aData[7] /1 >= filter.minrating  &&
+             aData[8] /1 >= filter.minreviews &&
+            (aData[6] == 'Yes' || !filter.bestseller) &&
             (!filter.maxprice || aData[4] <= filter.maxprice) && 
             (!filter.minprice || aData[4] >= filter.minprice);
     }
@@ -111,16 +108,13 @@ $(function(){
 
   /* Add a select menu for each TH element in the table footer */
   $("#results thead th").each(function(i){
-    if(i == 9) /* rating */ $(this).append('<select id="rating" name="rating">'+
+    if(i == 7) /* rating */ $(this).append('<select id="rating" name="rating">'+
       [0,'5.0',4.9,4.8,4.7,4.6,4.5,4.4,4.3,4.2,4.1,'4.0',3.9,3.8,3.5,'3.0'].map(function(i,e){
         return '<option value="'+i+'"'+(i == 0 ? ' selected' : '')+'>'+(i == 5 ? '5.0' : i > 0 ? i+'+' : 'All')+'</option>';}).join('')+'</select>');
-    if(i == 10) /* reviews */ $(this).append('<select id="reviews" name="reviews">'+
+    if(i == 8) /* reviews */ $(this).append('<select id="reviews" name="reviews">'+
       [0,1,2,5,10,25,50,75,100,150,200,250,300,400,500,750,1000,2500,5000,10000].map(function(i,e){
         return '<option value='+i+(i == 0 ? ' selected' : '')+'>'+(i > 0 ? i+'+' : 'All')+'</option>';}).join('')+'</select>');
-    if(i == 8) /* bestseller */ $(this).append('<input id="bestseller" name="bestseller" type="checkbox">');
-    if(i == 6) /* discount */ $(this).append('<select id="discount" name="discount">'+
-      [0,10,25,50,75,80,85,90,95,96,97,98,99].map(function(i,e){
-        return '<option value='+i+(i == 0 ? ' selected' : '')+'>'+(i > 0 ? i+'%' : 'All')+'</option>';}).join('')+'</select>');
+    if(i == 6) /* bestseller */ $(this).append('<input id="bestseller" name="bestseller" type="checkbox">');
     if(i == 4) /* price */ $(this).append('<select id="maxprice" name="maxprice">'+
       [0,10,20,50,100,200,500,1000,2000,5000,10000,20000,50000,100000,200000].map(function(i,e){
         return '<option value='+i+(i == 0 ? ' selected' : '')+'>'+(i == 0 ? 'All' : i == 1 ? '0-10' : i == 200000 ? '20000 and up' : i/10+'-'+i)+'</option>';}).join('')+'</select>');

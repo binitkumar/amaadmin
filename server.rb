@@ -99,9 +99,13 @@ post '/' do
   return {}.to_json if !params['url'] || params['url'] == ''
 
   url = params['url']
-
-  ret = cache('json:'+url)
-  return ret if ret
+  puts "##############################"
+  puts "##############################"
+  puts url.inspect 
+  puts "##############################"
+  puts "##############################"
+  #ret = cache('json:'+url)
+  #return ret if ret
 
   firstpage = !url[/[?&]page=/]
 
@@ -109,7 +113,7 @@ post '/' do
 
   x = noko(url)
 
-  maxresults = x.search('#resultCount span text()').to_s;
+  maxresults = x.search('h2#s-result-count text()').to_s;
 
   if maxresults[' of ']
     maxresults = maxresults.gsub(/.*of /,'')
@@ -125,6 +129,7 @@ post '/' do
   maxresults = maxresults.gsub(/ Res.*/,'').gsub(',','').to_i
 
   b = Amazon::breadcrumbs(x)[0]
+
   if firstpage
     refinements = Amazon::refinements(x).to_html
     sortby = Amazon::sortby(x).to_html
@@ -132,6 +137,11 @@ post '/' do
   end
 
   products = Amazon::products(x)
+  puts "#########################################"
+  puts "#########################################"
+  puts products.inspect
+  puts "#########################################"
+  puts "#########################################"
   products.each{|p|p[:link] += '&tag=%s' % URI.escape(affiliate)} if affiliate?
 
   if b
@@ -211,7 +221,7 @@ get '/logout' do
 end
 
 
-Thread.new do
-  sleep 1
-  Launchy.open('http://localhost:%d' % port)
-end unless HEROKU
+#Thread.new do
+#  sleep 1
+#  Launchy.open('http://localhost:%d' % port)
+#end unless HEROKU

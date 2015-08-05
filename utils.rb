@@ -9,6 +9,7 @@ USERAGENT = 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.17 (KHTML, like Gecko
 def noko(url)
   h = dl(url)
   #h = h.force_encoding('iso-8859-1').encode('utf-8') if url =~ /amazon[.]com[.]/ # amazon.com is still on iso-8859-1 # actually, we can ask it to use utf8: "ie=UTF8"
+
   Nokogiri::HTML(h, nil, 'UTF-8')
 end
 

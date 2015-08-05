@@ -89,27 +89,27 @@ SELECTORS = {
 #
 
 FIELDS = {
-  :asin     => '@name',
-  :link     => '.image a @href',
-  :image    => '.productImage @src',
+  :asin     => 'a.s-access-detail-page @href',
+  :link     => 'a.s-access-detail-page @href',
+  :image    => '.s-access-image @src',
 
   # title for other stuff
-  :title    => '.newaps a .bold text()',
-  :brand    => '.newaps .med.reg a text()',
+  :title    => 'h2.s-access-title text()',
+  :brand    => 'span.a-color-secondary > a.a-text-normal text()',
 
   # possible category in search results
-  :category => '.bold.orng text()',
+  :category => 'h3.a-size-small.a-color-null.s-inline.a-text-normal text()',
 
   # prices
-  :sale_price => '.newp .bld.red text()',
-  :list_price => '.newp .grey text()', # might be missing
+  :sale_price => 'span.s-price text()',
+  :list_price => 'span.s-text-strike text()', # might be missing
 
   # more prices
-  :sale_price_m => '.newPrice span.price.addon text()',
-  :list_price_m => '.newPrice strike.addon text()',
+  :sale_price_m => 'span.s-price text()',
+  :list_price_m => 'span.s-text-strike text()',
 
   # more prices
-  :sale_price_n => '.mkp2 .price.bld text()',
+  :sale_price_n => 'span.s-price text()',
 
 
   # music has it different
@@ -122,14 +122,14 @@ FIELDS = {
   :brand_release_x => '.newaps .med.reg text()',
 
   # bestseller number
-  :rank     => '.rankNumber text()',
+  :rank     => 'span.rankNumber text()',
 
   # these are in random places, but can be easily identified
   :rating   => "*[alt$=' out of 5 stars'] @alt", # remove the ' out of ...' part
-  :reviews  => "a[href*='/product-reviews/'] > text()", # needs whitespace stripping
+  :reviews  => "a.a-size-small.a-link-normal.a-text-normal text()", # needs whitespace stripping
 
-  :reviews_m => ".rvwCnt a text()",
-  :reviews_n => ".reviewsCount a text()"
+  :reviews_m => "a.a-size-small.a-link-normal.a-text-normal text()",
+  :reviews_n => "a.a-size-small.a-link-normal.a-text-normal  text()"
 }
 
 FORMATFIELDS = {
@@ -225,7 +225,7 @@ def self.products(x)
     # let's mine the keys we need from the result blocks
     z = {}; s = {}
     FIELDS.each_pair do |key,pattern|
-      s[key] = (z[key] = x.search(pattern))[0].to_s.gsub(/&amp;/,'&').gsub(/^\s+|\s+$/m,'')
+      s[key] = (z[key] = x.search(pattern))[0].to_s.gsub(/&amp;/,'&').gsub(/^\s+|\s+$/m,'')      
       pp z[key] if key == :category
     end
 
@@ -254,7 +254,6 @@ def self.products(x)
       r << extra_p(p) if p[:sale_price] != ''
     end
   end
-
   return r
 end
 
